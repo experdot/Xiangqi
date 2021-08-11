@@ -22,17 +22,17 @@ Partial Class UserControl1
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UserControl1))
         Me.SuspendLayout()
         '
         'UserControl1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
+        Me.BackColor = System.Drawing.SystemColors.AppWorkspace
         Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "UserControl1"
-        Me.Size = New System.Drawing.Size(627, 519)
+        Me.Size = New System.Drawing.Size(836, 692)
         Me.ResumeLayout(False)
 
     End Sub

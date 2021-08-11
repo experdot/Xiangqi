@@ -4,7 +4,8 @@
     Dim Game As New XiangqiGame
 
     Private Sub PaintPage()
-        Dim Painter = New Painter(Me.CreateGraphics)
+        Dim graphics = Me.CreateGraphics()
+        Dim Painter = New Painter(graphics)
         Painter.Draw(Game.Board.PieceMap)
     End Sub
 

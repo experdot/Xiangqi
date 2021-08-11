@@ -18,6 +18,7 @@
         Dim bmp As New Bitmap(width, height)
         Dim pg = Graphics.FromImage(bmp)
         pg.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+        pg.Clear(Color.Gray)
         Dim border As Single = Size / 16
         For i = 0 To 9
             For j = 0 To 8

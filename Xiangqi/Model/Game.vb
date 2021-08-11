@@ -40,7 +40,7 @@ Public Class XiangqiGame
     Public Sub Move(location As Vector2)
         If Board.SelectedPiece Is Nothing Then
             Dim target = Board.PieceMap(location.X, location.Y)
-            If target.Camp = Board.Camp Then
+            If target?.Camp = Board.Camp Then
                 Board.SelectedPiece = Board.PieceMap(location.X, location.Y)
             End If
         Else
