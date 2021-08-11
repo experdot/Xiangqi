@@ -26,23 +26,23 @@ Public Class Form1
         If mode = 0 Then
             For x = 0 To 8
                 For y = 0 To 9
-                    walkline(x, y, walkstep) = UserControl1.pMap(x, y)
+                    'walkline(x, y, walkstep) = UserControl1.pMap(x, y)
                 Next
             Next
             '检查AI移动
-            If ((UserControl1.pTurn = -1 And redPlayer = 1) Or (UserControl1.pTurn = 1 And blackPlayer = 1)) And gameIsOver = False Then
-                'Dim movings() As Integer
-                'movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiPlayerDepth)
-                'UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
-                Dim tempThread As New Thread(AddressOf aiThread)
-                tempThread.Start()
-            End If
+            'If ((UserControl1.pTurn = -1 And redPlayer = 1) Or (UserControl1.pTurn = 1 And blackPlayer = 1)) And gameIsOver = False Then
+            '    'Dim movings() As Integer
+            '    'movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiPlayerDepth)
+            '    'UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
+            '    Dim tempThread As New Thread(AddressOf aiThread)
+            '    tempThread.Start()
+            'End If
         End If
     End Sub
     Sub aiThread()
-        Dim movings() As Integer
-        movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiPlayerDepth)
-        UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
+        'Dim movings() As Integer
+        'movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiPlayerDepth)
+        'UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
     End Sub
     Private Sub Initialise() '初始化棋盘
         Dim NewPosition() As Byte = {
@@ -59,7 +59,7 @@ Public Class Form1
  }
         For i = 0 To 9
             For j = 0 To 8
-                UserControl1.pMap(j, i) = NewPosition(i * 9 + j)
+                'UserControl1.pMap(j, i) = NewPosition(i * 9 + j)
             Next
         Next
         '  My.Computer.Audio.Play("f:\NewGame.wav")
@@ -77,8 +77,8 @@ Public Class Form1
         If beginNewgame = True Then
             gameIsOver = False
             walkstep = -1
-            Initialise()
-            UserControl1.Turnchange(-1, 0)
+            UserControl1.Start()
+            'UserControl1.Turnchange(-1, 0)
             StartTime = Now
             Timer1.Enabled = True
         End If
@@ -92,21 +92,21 @@ Public Class Form1
         If walkstep > 0 Then
             For x = 0 To 8
                 For y = 0 To 9
-                    UserControl1.pMap(x, y) = walkline(x, y, walkstep - 1)
+                    'UserControl1.pMap(x, y) = walkline(x, y, walkstep - 1)
                 Next
             Next
             walkstep = walkstep - 1
-            UserControl1.Turnchange(-UserControl1.pTurn, 1)
+            'UserControl1.Turnchange(-UserControl1.pTurn, 1)
             '  My.Computer.Audio.Play("f:\落子.wav")
             gameIsOver = False
         End If
     End Sub
     '提示
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
-        Dim movings() As Integer
+        'Dim movings() As Integer
         If gameIsOver = False Then
-            movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiHelperDepth)
-            UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
+            'movings = AiMove(UserControl1.pMap, UserControl1.pTurn, aiHelperDepth)
+            'UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
         End If
     End Sub
 
@@ -115,8 +115,19 @@ Public Class Form1
         ToolStripLabel2.Text = Format(TimeSerial(0, 0, DateDiff("s", StartTime, Now)), "mm:ss")
     End Sub
 
-    Private Sub UserControl1_Load(sender As Object, e As EventArgs) Handles UserControl1.Load
-        Dim XiangqiGame = New XiangqiGame
-        XiangqiGame.Start()
+    Private Sub UserControl1_TurnChanged(turn As Integer, mode As Integer) Handles UserControl1.TurnChanged
+
+    End Sub
+
+    Private Sub UserControl1_Load(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
     End Sub
 End Class

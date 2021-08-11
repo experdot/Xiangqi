@@ -4,7 +4,7 @@
     End Sub
     '翻转棋盘
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
-        Form1.UserControl1.FlipChange()
+        'Form1.UserControl1.FlipChange()
     End Sub
     '载入对局
     Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click

@@ -35,7 +35,6 @@
                 End If
             Next
         Next
-        bmp.Save("D:/1.bmp")
-        'Graphics.DrawImage(bpm, 0, 0)
+        Graphics.DrawImage(bmp, 0, 0)
     End Sub
 End Class

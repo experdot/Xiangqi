@@ -23,8 +23,6 @@ Public Class XiangqiGame
     Public Sub Start()
         GameStaus = GameStaus.Running
         RuleManager.Initialize(Board)
-        Dim painter = New Painter(Nothing)
-        painter.Draw(Board.PieceMap)
     End Sub
 
     Public Sub [Stop]()
