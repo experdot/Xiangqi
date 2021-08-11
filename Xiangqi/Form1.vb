@@ -45,17 +45,17 @@ Public Class Form1
         UserControl1.Moving(movings(0), movings(1), movings(2), movings(3))
     End Sub
     Private Sub Initialise() '初始化棋盘
-        Dim NewPosition() As Byte = { _
- 1, 2, 4, 5, 6, 5, 4, 2, 1, _
- 0, 0, 0, 0, 0, 0, 0, 0, 0, _
- 0, 3, 0, 0, 0, 0, 0, 3, 0, _
- 7, 0, 7, 0, 7, 0, 7, 0, 7, _
- 0, 0, 0, 0, 0, 0, 0, 0, 0, _
- 0, 0, 0, 0, 0, 0, 0, 0, 0, _
- 15, 0, 15, 0, 15, 0, 15, 0, 15, _
- 0, 11, 0, 0, 0, 0, 0, 11, 0, _
- 0, 0, 0, 0, 0, 0, 0, 0, 0, _
- 9, 10, 12, 13, 14, 13, 12, 10, 9 _
+        Dim NewPosition() As Byte = {
+ 1, 2, 4, 5, 6, 5, 4, 2, 1,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 3, 0, 0, 0, 0, 0, 3, 0,
+ 7, 0, 7, 0, 7, 0, 7, 0, 7,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 15, 0, 15, 0, 15, 0, 15, 0, 15,
+ 0, 11, 0, 0, 0, 0, 0, 11, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 9, 10, 12, 13, 14, 13, 12, 10, 9
  }
         For i = 0 To 9
             For j = 0 To 8
@@ -113,5 +113,10 @@ Public Class Form1
     '记录时间
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         ToolStripLabel2.Text = Format(TimeSerial(0, 0, DateDiff("s", StartTime, Now)), "mm:ss")
+    End Sub
+
+    Private Sub UserControl1_Load(sender As Object, e As EventArgs) Handles UserControl1.Load
+        Dim XiangqiGame = New XiangqiGame
+        XiangqiGame.Start()
     End Sub
 End Class
