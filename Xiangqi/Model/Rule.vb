@@ -35,6 +35,7 @@ Public Class RuleManager
 
     Public Sub Move(map As Piece(,), oldLocation As Vector2, newLocation As Vector2)
         map(newLocation.X, newLocation.Y) = map(oldLocation.X, oldLocation.Y)
+        map(newLocation.X, newLocation.Y).Location = New Vector2(newLocation.X, newLocation.Y)
         map(oldLocation.X, oldLocation.Y) = Nothing
     End Sub
 
