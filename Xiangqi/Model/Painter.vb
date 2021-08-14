@@ -11,7 +11,8 @@
         PieceName(Camp.Black) = {"車", "馬", "炮", "象", "士", "將", "卒"}
     End Sub
 
-    Public Sub Draw(pieceMap As Piece(,))
+    Public Sub Draw(board As Board)
+        Dim pieceMap = board.PieceMap
         Dim width = CInt(Size * (pieceMap.GetUpperBound(0) + 1))
         Dim height = CInt(Size * (pieceMap.GetUpperBound(1) + 1))
         Dim font = New Font(New FontFamily("微软雅黑"), Size / 3)
@@ -36,6 +37,14 @@
                 End If
             Next
         Next
+
+        If (board.SelectedPiece IsNot Nothing) Then
+            Dim pen As Pen = Pens.Blue
+            Dim x = board.SelectedPiece.Location.X
+            Dim y = board.SelectedPiece.Location.Y
+            pg.DrawEllipse(pen, border + x * Size, border + y * Size, Size - border * 2, Size - border * 2)
+        End If
+
         Graphics.DrawImage(bmp, 0, 0)
     End Sub
 End Class

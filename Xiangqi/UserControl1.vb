@@ -6,7 +6,7 @@
     Private Sub PaintPage()
         Dim graphics = Me.CreateGraphics()
         Dim Painter = New Painter(graphics)
-        Painter.Draw(Game.Board.PieceMap)
+        Painter.Draw(Game.Board)
     End Sub
 
     Public Sub Start()
