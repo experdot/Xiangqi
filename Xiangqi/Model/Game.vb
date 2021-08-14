@@ -46,18 +46,23 @@ Public Class XiangqiGame
         Else
             Dim oldLocation = Board.SelectedPiece.Location
             Dim newLocation = location
-            Dim moveable As Boolean = RuleManager.GetMoveable(Board.PieceMap, oldLocation, newLocation)
-            If moveable Then
-                RuleManager.Move(Board.PieceMap, oldLocation, newLocation)
-                If (RuleManager.GetIsOver(Board.PieceMap)) Then
-                    [Stop]()
-                Else
-                    Board.ExchangeCamp()
-                    Board.SelectedPiece = Nothing
+
+            Dim target = Board.PieceMap(location.X, location.Y)
+            If target?.Camp = Board.SelectedPiece.Camp Then
+                Board.SelectedPiece = Board.PieceMap(location.X, location.Y)
+            Else
+                Dim moveable As Boolean = RuleManager.GetMoveable(Board.PieceMap, oldLocation, newLocation)
+                If moveable Then
+                    RuleManager.Move(Board.PieceMap, oldLocation, newLocation)
+                    If (RuleManager.GetIsOver(Board.PieceMap)) Then
+                        [Stop]()
+                    Else
+                        Board.ExchangeCamp()
+                        Board.SelectedPiece = Nothing
+                    End If
                 End If
             End If
         End If
-
     End Sub
 
     Public Sub GoBack()
