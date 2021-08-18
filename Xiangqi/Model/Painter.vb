@@ -24,7 +24,39 @@
         Dim bmp As New Bitmap(width, height)
         Dim pg = Graphics.FromImage(bmp)
         pg.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-        pg.Clear(Color.Gray)
+        pg.Clear(Color.LightGray)
+
+        For i = 0 To 9 Step 8
+            Dim margin = Size / 2.0F
+            Dim offset = Size * i + margin
+            pg.DrawLine(Pens.Black, offset, margin, offset, height - margin)
+        Next
+
+        For i = 0 To 9
+            Dim margin = Size / 2.0F
+            Dim offset = Size * i + margin
+            pg.DrawLine(Pens.Black, offset, margin, offset, Size * 4 + margin)
+        Next
+
+        For i = 0 To 9
+            Dim margin = Size / 2.0F
+            Dim offset = Size * i + margin
+            pg.DrawLine(Pens.Black, offset, Size * 5 + margin, offset, height - margin)
+        Next
+
+        For j = 0 To 9
+            Dim margin = Size / 2.0F
+            Dim offset = Size * j + margin
+            pg.DrawLine(Pens.Black, margin, offset, width - margin, offset)
+        Next
+
+        pg.DrawLine(Pens.Black, Size * 3.5F, Size / 2.0F, Size * 5.5F, Size / 2.0F + Size * 2.0F)
+        pg.DrawLine(Pens.Black, Size * 3.5F, Size / 2.0F + Size * 2.0F, Size * 5.5F, Size / 2.0F)
+
+        pg.DrawLine(Pens.Black, Size * 3.5F, Size * 7.5F, Size * 5.5F, Size * 9.5F)
+        pg.DrawLine(Pens.Black, Size * 3.5F, Size * 9.5F, Size * 5.5F, Size * 7.5F)
+
+
         Dim border As Single = Size / 16
         For i = 0 To 9
             For j = 0 To 8

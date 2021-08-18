@@ -28,9 +28,9 @@ Partial Class UserControl1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "UserControl1"
         Me.Size = New System.Drawing.Size(836, 692)
         Me.ResumeLayout(False)

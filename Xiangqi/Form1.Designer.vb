@@ -51,7 +51,7 @@ Partial Class Form1
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator1, Me.ToolStripLabel1, Me.ToolStripLabel2, Me.ToolStripLabel3, Me.ToolStripLabel4})
         Me.ToolStrip1.Location = New System.Drawing.Point(9, 9)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(379, 27)
+        Me.ToolStrip1.Size = New System.Drawing.Size(379, 31)
         Me.ToolStrip1.TabIndex = 1
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -63,7 +63,7 @@ Partial Class Form1
         Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
         Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Size = New System.Drawing.Size(43, 24)
+        Me.ToolStripButton1.Size = New System.Drawing.Size(43, 28)
         Me.ToolStripButton1.Text = "菜单"
         '
         'ToolStripButton2
@@ -74,7 +74,7 @@ Partial Class Form1
         Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
         Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(43, 24)
+        Me.ToolStripButton2.Size = New System.Drawing.Size(43, 28)
         Me.ToolStripButton2.Text = "新局"
         '
         'ToolStripButton3
@@ -85,7 +85,7 @@ Partial Class Form1
         Me.ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), System.Drawing.Image)
         Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton3.Name = "ToolStripButton3"
-        Me.ToolStripButton3.Size = New System.Drawing.Size(43, 24)
+        Me.ToolStripButton3.Size = New System.Drawing.Size(43, 28)
         Me.ToolStripButton3.Text = "设置"
         '
         'ToolStripButton4
@@ -96,7 +96,7 @@ Partial Class Form1
         Me.ToolStripButton4.Image = CType(resources.GetObject("ToolStripButton4.Image"), System.Drawing.Image)
         Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton4.Name = "ToolStripButton4"
-        Me.ToolStripButton4.Size = New System.Drawing.Size(43, 24)
+        Me.ToolStripButton4.Size = New System.Drawing.Size(43, 28)
         Me.ToolStripButton4.Text = "悔棋"
         '
         'ToolStripButton5
@@ -107,36 +107,36 @@ Partial Class Form1
         Me.ToolStripButton5.Image = CType(resources.GetObject("ToolStripButton5.Image"), System.Drawing.Image)
         Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButton5.Name = "ToolStripButton5"
-        Me.ToolStripButton5.Size = New System.Drawing.Size(43, 24)
+        Me.ToolStripButton5.Size = New System.Drawing.Size(43, 28)
         Me.ToolStripButton5.Text = "提示"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 27)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 31)
         '
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(39, 24)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(39, 28)
         Me.ToolStripLabel1.Text = "局时"
         '
         'ToolStripLabel2
         '
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(49, 24)
+        Me.ToolStripLabel2.Size = New System.Drawing.Size(49, 28)
         Me.ToolStripLabel2.Text = "00:00"
         '
         'ToolStripLabel3
         '
         Me.ToolStripLabel3.Name = "ToolStripLabel3"
-        Me.ToolStripLabel3.Size = New System.Drawing.Size(39, 24)
+        Me.ToolStripLabel3.Size = New System.Drawing.Size(39, 28)
         Me.ToolStripLabel3.Text = "步数"
         '
         'ToolStripLabel4
         '
         Me.ToolStripLabel4.Name = "ToolStripLabel4"
-        Me.ToolStripLabel4.Size = New System.Drawing.Size(18, 24)
+        Me.ToolStripLabel4.Size = New System.Drawing.Size(18, 28)
         Me.ToolStripLabel4.Text = "0"
         '
         'PictureBox1
@@ -164,7 +164,7 @@ Partial Class Form1
         '
         'UserControl1
         '
-        Me.UserControl1.BackColor = System.Drawing.SystemColors.AppWorkspace
+        Me.UserControl1.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.UserControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.UserControl1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.UserControl1.Location = New System.Drawing.Point(0, 45)
