@@ -13,6 +13,11 @@
 
     Public Sub Draw(board As Board)
         Dim pieceMap = board.PieceMap
+
+        If board.PieceMap Is Nothing Then
+            Return
+        End If
+
         Dim width = CInt(Size * (pieceMap.GetUpperBound(0) + 1))
         Dim height = CInt(Size * (pieceMap.GetUpperBound(1) + 1))
         Dim font = New Font(New FontFamily("微软雅黑"), Size / 3)

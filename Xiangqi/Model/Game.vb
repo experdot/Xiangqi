@@ -38,6 +38,10 @@ Public Class XiangqiGame
     End Sub
 
     Public Sub Move(location As Vector2)
+        If Not GameStaus = GameStaus.Running Then
+            Return
+        End If
+
         If Board.SelectedPiece Is Nothing Then
             Dim target = Board.PieceMap(location.X, location.Y)
             If target?.Camp = Board.Camp Then
