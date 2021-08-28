@@ -62,20 +62,30 @@ Public Class Move
                 actionSuffix = AxisBlackString(EndLocation.X)
             End If
         Else
+            Dim useStepOffset = Not (PieceType = PieceType.Elephant OrElse PieceType = PieceType.Horse OrElse PieceType = PieceType.Adviser)
+
             If Camp = Camp.Red Then
                 If offset > 0 Then
                     action = ActionString(1)
                 Else
                     action = ActionString(0)
                 End If
-                actionSuffix = ActionStepRedString(Math.Abs(offset) - 1)
+                If useStepOffset Then
+                    actionSuffix = ActionStepRedString(Math.Abs(offset) - 1)
+                Else
+                    actionSuffix = AxisRedString(AxisCount - 1 - EndLocation.X)
+                End If
             Else
                 If offset > 0 Then
                     action = ActionString(0)
                 Else
                     action = ActionString(1)
                 End If
-                actionSuffix = ActionStepBlackString(Math.Abs(offset) - 1)
+                If useStepOffset Then
+                    actionSuffix = ActionStepBlackString(Math.Abs(offset) - 1)
+                Else
+                    actionSuffix = AxisBlackString(EndLocation.X)
+                End If
             End If
         End If
 
