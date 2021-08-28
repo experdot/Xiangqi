@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Xiangqi.App" xmlns:control="clr-namespace:Xiangqi.App.Control"
         mc:Ignorable="d"
-        Title="MainWindow" Height="960" Width="1200" Loaded="Window_Loaded">
+        Title="MainWindow" Height="1040" Width="1200" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Grid Margin="24">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
