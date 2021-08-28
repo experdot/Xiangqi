@@ -11,12 +11,17 @@ Public Class XiangqiGame
     Public Property Size As Integer
     Public Property Board As Board
     Public Property BoardHistory As Queue(Of Board)
+    Public Property MoveHistory As Queue(Of Move)
     Public Property RuleManager As RuleManager
     Public Property GameStaus As GameStaus
+
+    Public Event OnMoved As EventHandler
 
     Public Sub New()
         Size = 20
         Board = New Board()
+        BoardHistory = New Queue(Of Board)
+        MoveHistory = New Queue(Of Move)
         RuleManager = New RuleManager()
     End Sub
 
@@ -57,7 +62,36 @@ Public Class XiangqiGame
             Else
                 Dim moveable As Boolean = RuleManager.GetMoveable(Board.PieceMap, oldLocation, newLocation)
                 If moveable Then
+
+                    Dim piece = Board.PieceMap(oldLocation.X, oldLocation.Y)
+                    Dim count = 0
+                    Dim order = 0
+
+                    For index = 0 To 9
+                        Dim item = Board.PieceMap(oldLocation.X, index)
+                        If item?.Camp = piece.Camp Then
+                            If item?.PieceType = piece.PieceType Then
+                                If item Is piece Then
+                                    order = count
+                                End If
+                                count += 1
+                            End If
+                        End If
+                    Next
+
+                    MoveHistory.Enqueue(New Move() With {
+                        .Camp = piece.Camp,
+                        .PieceType = piece.PieceType,
+                        .StartLocation = oldLocation,
+                        .EndLocation = newLocation,
+                        .VerticalCount = count,
+                        .VerticalOrder = order
+                    })
+
                     RuleManager.Move(Board.PieceMap, oldLocation, newLocation)
+
+                    RaiseEvent OnMoved(Me, Nothing)
+
                     If (RuleManager.GetIsOver(Board.PieceMap)) Then
                         [Stop]()
                     Else

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,7 +19,7 @@ namespace Xiangqi.App.ViewModel
         public XiangqiGame Game { get; set; }
         public GameBoardRender Render { get; set; }
 
-        public double Size { get; set; } = 64;
+        public double Size { get; set; } = 96;
 
         public GameBoardViewModel(Grid boardGrid, Canvas backgroundCanvas, Canvas pieceCanvas)
         {
@@ -50,6 +52,8 @@ namespace Xiangqi.App.ViewModel
 
             PieceCanvas.Children.Clear();
             Render.RenderPiece(Game.Board, PieceCanvas);
+
+            Debug.WriteLine(Game.MoveHistory.LastOrDefault()?.ToChineseWXF());
         }
     }
 }

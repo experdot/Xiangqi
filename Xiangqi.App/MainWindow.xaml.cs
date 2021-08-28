@@ -24,5 +24,16 @@ namespace Xiangqi.App
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            GameBoardControl.ViewModel.Game.OnMoved += Game_OnMoved;
+        }
+
+        private void Game_OnMoved(object sender, EventArgs e)
+        {
+            MoveListBox.ItemsSource = new string[] { };
+            MoveListBox.ItemsSource = GameBoardControl.ViewModel.Game.MoveHistory.Select(v => v.ToChineseWXF());
+        }
     }
 }

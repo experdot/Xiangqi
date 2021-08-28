@@ -5,10 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Xiangqi.App" xmlns:control="clr-namespace:Xiangqi.App.Control"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1200">
-    <Grid>
-        <control:GameBoardControl Margin="20">
-            
+        Title="MainWindow" Height="960" Width="1200" Loaded="Window_Loaded">
+    <Grid Margin="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <control:GameBoardControl x:Name="GameBoardControl" Grid.Column="0">
+
         </control:GameBoardControl>
+        <Grid Grid.Column="1">
+            <ListBox FontSize="24" FontFamily="SimSun" x:Name="MoveListBox">
+            </ListBox>
+        </Grid>
     </Grid>
 </Window>
