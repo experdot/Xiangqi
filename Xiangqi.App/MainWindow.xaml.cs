@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xiangqi.Core;
 
 namespace Xiangqi.App
 {
@@ -30,7 +31,7 @@ namespace Xiangqi.App
             GameBoardControl.ViewModel.Game.OnMoved += Game_OnMoved;
         }
 
-        private void Game_OnMoved(object sender, EventArgs e)
+        private void Game_OnMoved(object sender, OnMovedEventArgs e)
         {
             MoveListBox.ItemsSource = new string[] { };
             MoveListBox.ItemsSource = GameBoardControl.ViewModel.Game.MoveHistory.Select(v => v.ToChineseWXF());

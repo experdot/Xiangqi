@@ -7,6 +7,13 @@ Public Enum GameStaus
     Stopped
 End Enum
 
+Public Class OnMovedEventArgs
+    Public OldLocation As Vector2
+    Public NewLocation As Vector2
+    Public Piece As Piece
+    Public DestroyedPiece As Piece
+End Class
+
 Public Class XiangqiGame
     Public Property Size As Integer
     Public Property Board As Board
@@ -15,7 +22,7 @@ Public Class XiangqiGame
     Public Property RuleManager As RuleManager
     Public Property GameStaus As GameStaus
 
-    Public Event OnMoved As EventHandler
+    Public Event OnMoved As EventHandler(Of OnMovedEventArgs)
 
     Public Sub New()
         Size = 20
@@ -79,6 +86,10 @@ Public Class XiangqiGame
                         End If
                     Next
 
+                    If piece.Camp = Camp.Black Then
+                        order = count - order - 1
+                    End If
+
                     MoveHistory.Enqueue(New Move() With {
                         .Camp = piece.Camp,
                         .PieceType = piece.PieceType,
@@ -88,9 +99,16 @@ Public Class XiangqiGame
                         .VerticalOrder = order
                     })
 
+                    Dim destroyedPiece = Board.PieceMap(newLocation.X, newLocation.Y)
+
                     RuleManager.Move(Board.PieceMap, oldLocation, newLocation)
 
-                    RaiseEvent OnMoved(Me, Nothing)
+                    RaiseEvent OnMoved(Me, New OnMovedEventArgs() With {
+                        .OldLocation = oldLocation,
+                        .NewLocation = newLocation,
+                        .Piece = Board.PieceMap(oldLocation.X, oldLocation.Y),
+                        .DestroyedPiece = destroyedPiece
+                    })
 
                     If (RuleManager.GetIsOver(Board.PieceMap)) Then
                         [Stop]()

@@ -24,7 +24,7 @@ Public Class Move
 
     Public AxisCount As Integer = 9
 
-    Public Function ToChineseWXF()
+    Public Function ToChineseWXF() As String
         Dim piece As String
 
         If Camp = Camp.Red Then

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using Xiangqi.Core;
@@ -12,11 +14,13 @@ namespace Xiangqi.App.Render
     public class GameBoardRender
     {
         public double Size { get; set; }
+        public Dictionary<Vector2, Grid> PieceGrid { get; set; }
         public Dictionary<Camp, string[]> PieceNames { get; set; }
 
         public GameBoardRender(double size)
         {
             Size = size;
+            PieceGrid = new Dictionary<Vector2, Grid>();
             PieceNames = new Dictionary<Camp, string[]>
             {
                 [Camp.Red] = new[] { "車", "馬", "砲", "相", "仕", "帥", "兵" },
@@ -77,12 +81,55 @@ namespace Xiangqi.App.Render
                     if (target is object)
                     {
                         var brush = target.Camp == Camp.Red ? Brushes.Red : Brushes.Black;
-                        canvas.Children.Add(DrawCircle(brush, border + j * Size, border + i * Size, Size - border * 2f, Size - border * 2f));
+
+                        var circle = DrawCircle(brush, border + j * Size, border + i * Size, Size - border * 2f, Size - border * 2f);
+
                         var text = PieceNames[target.Camp][(int)(target.PieceType)];
-                        canvas.Children.Add(DrawText(text, Size / 2, Brushes.White, border + j * Size, border + i * Size, Size - border * 2f, Size - border * 2f));
+                        var textControl = DrawText(text, Size / 2, Brushes.White, border + j * Size, border + i * Size, Size - border * 2f, Size - border * 2f);
+                        circle.Children.Add(textControl);
+
+                        canvas.Children.Add(circle);
+                        PieceGrid[new Vector2(j, i)] = circle;
                     }
                 }
             }
+        }
+
+        public void RenderAnimation(Canvas pieceCanvas, Vector2 oldLocation, Vector2 newLocation)
+        {
+            var margin = (float)Size / 16f;
+            var oldPosition = oldLocation * (float)Size + new Vector2(margin, margin);
+            var newPosition = newLocation * (float)Size + new Vector2(margin, margin);
+
+            CubicEase cubicEase = new CubicEase() { EasingMode = EasingMode.EaseIn };
+            var duration = TimeSpan.FromMilliseconds(200);
+
+            DoubleAnimation animeX = new DoubleAnimation()
+            {
+                From = oldPosition.X,
+                To = newPosition.X,
+                Duration = duration,
+                EasingFunction = cubicEase
+            };
+
+            DoubleAnimation animeY = new DoubleAnimation()
+            {
+                From = oldPosition.Y,
+                To = newPosition.Y,
+                Duration = duration,
+                EasingFunction = cubicEase
+            };
+
+            var grid = PieceGrid[oldLocation];
+            grid.BeginAnimation(Canvas.LeftProperty, animeX);
+            grid.BeginAnimation(Canvas.TopProperty, animeY);
+            if (PieceGrid.ContainsKey(newLocation))
+            {
+                pieceCanvas.Children.Remove(PieceGrid[newLocation]);
+            }
+
+            PieceGrid[oldLocation] = null;
+            PieceGrid[newLocation] = grid;
         }
 
         private Line DrawLine(Brush brush, double x1, double y1, double x2, double y2)
@@ -97,18 +144,23 @@ namespace Xiangqi.App.Render
             return line;
         }
 
-        private Ellipse DrawCircle(Brush brush, double x1, double y1, double width, double height)
+        private Grid DrawCircle(Brush brush, double x1, double y1, double width, double height)
         {
+            var grid = new Grid();
+            grid.SetValue(Canvas.LeftProperty, x1);
+            grid.SetValue(Canvas.TopProperty, y1);
+            grid.Width = width;
+            grid.Height = height;
+
             var line = new Ellipse();
             line.Width = width;
             line.Height = height;
-            line.SetValue(Canvas.LeftProperty, x1);
-            line.SetValue(Canvas.TopProperty, y1);
             line.Fill = brush;
             line.Stroke = Brushes.White;
             line.StrokeThickness = 4;
             line.Effect = new DropShadowEffect() { BlurRadius = 8 };
-            return line;
+            grid.Children.Add(line);
+            return grid;
         }
 
         private Border DrawText(string text, double fontSize, Brush brush, double x1, double y1, double width, double height)
