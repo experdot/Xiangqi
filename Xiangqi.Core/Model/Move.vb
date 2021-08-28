@@ -68,14 +68,14 @@ Public Class Move
                 Else
                     action = ActionString(0)
                 End If
-                actionSuffix = ActionStepRedString(Math.Abs(offset))
+                actionSuffix = ActionStepRedString(Math.Abs(offset) - 1)
             Else
                 If offset > 0 Then
                     action = ActionString(0)
                 Else
                     action = ActionString(1)
                 End If
-                actionSuffix = ActionStepBlackString(Math.Abs(offset))
+                actionSuffix = ActionStepBlackString(Math.Abs(offset) - 1)
             End If
         End If
 
