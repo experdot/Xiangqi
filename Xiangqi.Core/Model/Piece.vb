@@ -1,12 +1,12 @@
 ﻿Imports System.Numerics
 
 Public Enum PieceType
-    Chariot
-    Horse
-    Cannon
-    Elephant
-    Adviser
     King
+    Adviser
+    Elephant
+    Horse
+    Chariot
+    Cannon
     Pawn
 End Enum
 

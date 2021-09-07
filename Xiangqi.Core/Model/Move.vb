@@ -15,8 +15,8 @@ Public Class Move
     Public AxisRedString As String() = New String() {"一", "二", "三", "四", "五", "六", "七", "八", "九"}
     Public AxisBlackString As String() = New String() {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
-    Public PieceRedString As String() = New String() {"車", "馬", "砲", "相", "仕", "帥", "兵"}
-    Public PieceBlackString As String() = New String() {"車", "馬", "炮", "象", "士", "將", "卒"}
+    Public PieceRedString As String() = New String() {"帥", "仕", "相", "馬", "車", "砲", "兵"}
+    Public PieceBlackString As String() = New String() {"將", "士", "象", "馬", "車", "炮", "卒"}
 
     Public ActionString As String() = New String() {"进", "退", "平"}
     Public ActionStepRedString As String() = New String() {"一", "二", "三", "四", "五", "六", "七", "八", "九"}

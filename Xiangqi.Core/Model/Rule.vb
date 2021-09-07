@@ -10,16 +10,16 @@ Public Class RuleManager
 
     Public Sub Initialize(board As Board)
         Dim NewPosition() As Byte = {
-            1, 2, 4, 5, 6, 5, 4, 2, 1,
+            5, 4, 3, 2, 1, 2, 3, 4, 5,
             0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 3, 0, 0, 0, 0, 0, 3, 0,
+            0, 6, 0, 0, 0, 0, 0, 6, 0,
             7, 0, 7, 0, 7, 0, 7, 0, 7,
             0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0,
             15, 0, 15, 0, 15, 0, 15, 0, 15,
-            0, 11, 0, 0, 0, 0, 0, 11, 0,
+            0, 14, 0, 0, 0, 0, 0, 14, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0,
-            9, 10, 12, 13, 14, 13, 12, 10, 9
+            13, 12, 11, 10, 9, 10, 11, 12, 13
         }
         ReDim board.PieceMap(8, 9)
         For i = 0 To 9
@@ -36,12 +36,12 @@ Public Class RuleManager
             Next
         Next
 
-        Rules(PieceType.Chariot) = New ChariotRule()
-        Rules(PieceType.Horse) = New HorseRule()
-        Rules(PieceType.Cannon) = New CannonRule()
-        Rules(PieceType.Elephant) = New ElephantRule()
-        Rules(PieceType.Adviser) = New AdviserRule()
         Rules(PieceType.King) = New KingRule()
+        Rules(PieceType.Adviser) = New AdviserRule()
+        Rules(PieceType.Elephant) = New ElephantRule()
+        Rules(PieceType.Horse) = New HorseRule()
+        Rules(PieceType.Chariot) = New ChariotRule()
+        Rules(PieceType.Cannon) = New CannonRule()
         Rules(PieceType.Pawn) = New PawnRule()
     End Sub
     Public Function GetMoveable(map As Piece(,), oldLocation As Vector2, newLocation As Vector2) As Boolean

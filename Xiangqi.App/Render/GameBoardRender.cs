@@ -23,8 +23,8 @@ namespace Xiangqi.App.Render
             PieceGrid = new Dictionary<Vector2, Grid>();
             PieceNames = new Dictionary<Camp, string[]>
             {
-                [Camp.Red] = new[] { "車", "馬", "砲", "相", "仕", "帥", "兵" },
-                [Camp.Black] = new[] { "車", "馬", "炮", "象", "士", "將", "卒" }
+                [Camp.Red] = new[] { "帥", "仕", "相", "馬", "車", "砲", "兵" },
+                [Camp.Black] = new[] { "將", "士", "象", "馬", "車", "炮", "卒" }
             };
         }
 
