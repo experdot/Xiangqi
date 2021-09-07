@@ -39,7 +39,7 @@ Public Class Move
             piecePrefix = OrderPosition5String(VerticalOrder)
         ElseIf VerticalCount > 2 Then
             piecePrefix = OrderPosition3String(VerticalOrder)
-        ElseIf VerticalCount > 1 Then
+        ElseIf VerticalCount > 1 AndAlso Not (PieceType = PieceType.Adviser OrElse PieceType = PieceType.Elephant) Then
             piecePrefix = OrderPosition2String(VerticalOrder)
         Else
             If Camp = Camp.Red Then
