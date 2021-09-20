@@ -28,7 +28,7 @@ Public Class BoardStep
             If Math.Floor(doubleOrder) = doubleOrder Then
                 Return doubleOrder.ToString() + "." + Move.ToChineseWXF()
             Else
-                Dim paddingLeft = CInt(doubleOrder / 10)
+                Dim paddingLeft = Math.Floor(doubleOrder / 10)
                 Dim padding = "  "
                 For index = 1 To paddingLeft
                     padding += " "
