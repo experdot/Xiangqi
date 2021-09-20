@@ -157,7 +157,7 @@ namespace Xiangqi.App.Render
             line.Height = height;
             line.Fill = brush;
             line.Stroke = Brushes.White;
-            line.StrokeThickness = 4;
+            line.StrokeThickness = 3;
             line.Effect = new DropShadowEffect() { BlurRadius = 8 };
             grid.Children.Add(line);
             return grid;

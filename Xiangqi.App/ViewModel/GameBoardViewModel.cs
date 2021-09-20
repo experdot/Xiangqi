@@ -46,7 +46,7 @@ namespace Xiangqi.App.ViewModel
         private void Game_OnMoved(object sender, OnMovedEventArgs e)
         {
             Render.RenderAnimation(PieceCanvas, e.OldLocation, e.NewLocation);
-            SystemSpeaker.Speak(Game.MoveHistory.LastOrDefault().ToChineseWXF());
+            SystemSpeaker.Speak(Game.BoardStepHistory.LastOrDefault().Move.ToChineseWXF());
         }
 
         private void BoardGrid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

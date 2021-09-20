@@ -34,7 +34,7 @@ namespace Xiangqi.App
         private void Game_OnMoved(object sender, OnMovedEventArgs e)
         {
             MoveListBox.ItemsSource = new string[] { };
-            MoveListBox.ItemsSource = GameBoardControl.ViewModel.Game.MoveHistory.Select(v => v.ToChineseWXF());
+            MoveListBox.ItemsSource = GameBoardControl.ViewModel.Game.BoardStepHistory;
         }
     }
 }
