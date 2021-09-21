@@ -26,14 +26,14 @@ Public Class BoardStep
         Else
             Dim doubleOrder = Order / 2.0F
             If Math.Floor(doubleOrder) = doubleOrder Then
-                Return doubleOrder.ToString() + "." + Move.ToChineseWXF()
+                Return doubleOrder.ToString() + "." + MoveParser.ToChineseWXF(Move)
             Else
                 Dim paddingLeft = Math.Floor(doubleOrder / 10)
                 Dim padding = "  "
                 For index = 1 To paddingLeft
                     padding += " "
                 Next
-                Return padding + Move.ToChineseWXF()
+                Return padding + MoveParser.ToChineseWXF(Move)
             End If
 
         End If

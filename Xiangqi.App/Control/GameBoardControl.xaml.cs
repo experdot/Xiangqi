@@ -26,6 +26,13 @@ namespace Xiangqi.App.Control
 
             ViewModel = new GameBoardViewModel(BoardGrid, BackgroundLayer, PieceLayer);
             DataContext = ViewModel;
+
+            this.Loaded += GameBoardControl_Loaded;
+        }
+
+        private void GameBoardControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Load();
         }
     }
 }

@@ -43,10 +43,16 @@ namespace Xiangqi.App.ViewModel
             Game.OnMoved += Game_OnMoved;
         }
 
+        public void Load()
+        {
+            var move = MoveParser.FromChineseWXF(Game.Board, "兵七进一");
+            MoveExecutor.Execute(Game, move);
+        }
+
         private void Game_OnMoved(object sender, OnMovedEventArgs e)
         {
             Render.RenderAnimation(PieceCanvas, e.OldLocation, e.NewLocation);
-            SystemSpeaker.Speak(Game.BoardStepHistory.LastOrDefault().Move.ToChineseWXF());
+            SystemSpeaker.Speak(MoveParser.ToChineseWXF(Game.BoardStepHistory.LastOrDefault().Move));
         }
 
         private void BoardGrid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
