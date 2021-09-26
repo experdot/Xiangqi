@@ -19,11 +19,21 @@ Public Class MoveParser
     Public Shared PieceDictionary As Dictionary(Of String, PieceType)
     Public Shared PieceDictionarySource As String() = New String() {"帅将帥將", "仕士", "相象", "马馬傌豖", "车車谙硨俥", "砲炮包", "兵卒"}
 
+    Public Shared StepDictionary As Dictionary(Of String, Integer)
+    Public Shared StepDictionarySource As String() = New String() {"一1１", "二2２", "三3３", "四4４", "五5５", "六6６", "七7７", "八8８", "九9９"}
+
     Shared Sub New()
         PieceDictionary = New Dictionary(Of String, PieceType)
         For index = 0 To PieceDictionarySource.Length - 1
             For Each str In PieceDictionarySource(index)
                 PieceDictionary(str) = CType(index, PieceType)
+            Next
+        Next
+
+        StepDictionary = New Dictionary(Of String, Integer)
+        For index = 0 To StepDictionarySource.Length - 1
+            For Each str In StepDictionarySource(index)
+                StepDictionary(str) = index + 1
             Next
         Next
     End Sub
@@ -66,7 +76,7 @@ Public Class MoveParser
                 actionSuffix = AxisBlackString(move.EndLocation.X)
             End If
         Else
-            Dim useStepOffset = Not (move.PieceType = PieceType.Elephant OrElse move.PieceType = PieceType.Horse OrElse move.PieceType = PieceType.Adviser)
+            Dim useStepOffset = Not (move.PieceType = PieceType.Adviser OrElse move.PieceType = PieceType.Elephant OrElse move.PieceType = PieceType.Horse)
 
             If move.Camp = Camp.Red Then
                 If offset > 0 Then
@@ -109,10 +119,35 @@ Public Class MoveParser
         Dim verticalOrder As Integer
 
         If OrderPositionString.Contains(letter1) Then
+            pieceType = PieceDictionary(letter2)
+            If pieceType = PieceType.Pawn Then
+            Else
+                Dim pieces = From piece As Piece In board.PieceMap Where piece?.Camp = board.Camp AndAlso piece?.PieceType = pieceType
+                If letter1 = "前" Then
+                    verticalCount = 2
+                    verticalOrder = 0
+                ElseIf letter1 = "中" Then
+                    verticalCount = 3
+                    verticalOrder = 1
+                ElseIf letter1 = "后" Then
+                    verticalCount = 2
+                    verticalOrder = 1
+                End If
 
+                If board.Camp = Camp.Black Then
+                    verticalOrder = verticalCount - 1 - verticalOrder
+                End If
+
+                startLocation = pieces(verticalOrder).Location
+            End If
         Else
             pieceType = PieceDictionary(letter1)
-            Dim hIndex = AxisCount - AxisRedString.ToList().IndexOf(letter2) - 1
+            Dim hIndex As Integer
+            If board.Camp = Camp.Red Then
+                hIndex = AxisCount - StepDictionary(letter2)
+            Else
+                hIndex = StepDictionary(letter2) - 1
+            End If
             For Each piece In board.PieceMap
                 If piece IsNot Nothing Then
                     If piece.Camp = board.Camp AndAlso piece.PieceType = pieceType AndAlso piece.Location.X = hIndex Then
@@ -123,18 +158,79 @@ Public Class MoveParser
             Next
         End If
 
-        If letter3 = "进" Then
-            Dim vOffset = ActionStepRedString.ToList().IndexOf(letter4) + 1
-            endLocation = startLocation + New Vector2(0, -vOffset)
+        Dim invert As Integer = 1
+        If board.Camp = Camp.Black Then
+            invert = -1
+        End If
+
+        If letter3 = "平" Then
+            Dim x As Integer
+            If board.Camp = Camp.Red Then
+                x = AxisCount - StepDictionary(letter4)
+            Else
+                x = StepDictionary(letter4) - 1
+            End If
+            endLocation = New Vector2(x, startLocation.Y)
+        Else
+            If letter3 = "进" Then
+                invert = -invert
+            ElseIf letter3 = "退" Then
+                invert = invert
+            End If
+
+            If pieceType = PieceType.Adviser Then
+                Dim x As Integer
+                Dim xoffset As Integer
+
+                If board.Camp = Camp.Red Then
+                    x = AxisCount - StepDictionary(letter4)
+                    xoffset = Math.Abs(startLocation.X - x)
+                Else
+                    x = StepDictionary(letter4) - 1
+                    xoffset = Math.Abs(startLocation.X - x)
+                End If
+
+                endLocation = New Vector2(x, startLocation.Y + 1 * invert)
+
+            ElseIf pieceType = PieceType.Elephant Then
+                Dim x As Integer
+                Dim xoffset As Integer
+
+                If board.Camp = Camp.Red Then
+                    x = AxisCount - StepDictionary(letter4)
+                    xoffset = Math.Abs(startLocation.X - x)
+                Else
+                    x = StepDictionary(letter4) - 1
+                    xoffset = Math.Abs(startLocation.X - x)
+                End If
+
+                endLocation = New Vector2(x, startLocation.Y + 2 * invert)
+            ElseIf pieceType = PieceType.Horse Then
+                Dim x As Integer
+                Dim xoffset As Integer
+
+                If board.Camp = Camp.Red Then
+                    x = AxisCount - StepDictionary(letter4)
+                    xoffset = Math.Abs(startLocation.X - x)
+                Else
+                    x = StepDictionary(letter4) - 1
+                    xoffset = Math.Abs(startLocation.X - x)
+                End If
+
+                endLocation = New Vector2(x, startLocation.Y + (3 - xoffset) * invert)
+            Else
+                Dim vOffset As Integer = StepDictionary(letter4)
+                endLocation = startLocation + New Vector2(0, vOffset * invert)
+            End If
         End If
 
         Return New Move() With {
-            .StartLocation = startLocation,
-            .EndLocation = endLocation,
-            .PieceType = pieceType,
-            .VerticalCount = verticalCount,
-            .VerticalOrder = verticalOrder
-        }
+        .StartLocation = startLocation,
+        .EndLocation = endLocation,
+        .PieceType = pieceType,
+        .VerticalCount = verticalCount,
+        .VerticalOrder = verticalOrder
+    }
     End Function
 End Class
 
