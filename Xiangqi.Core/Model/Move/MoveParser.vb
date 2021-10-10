@@ -25,15 +25,15 @@ Public Class MoveParser
     Shared Sub New()
         PieceDictionary = New Dictionary(Of String, PieceType)
         For index = 0 To PieceDictionarySource.Length - 1
-            For Each str In PieceDictionarySource(index)
-                PieceDictionary(str) = CType(index, PieceType)
+            For Each item In PieceDictionarySource(index)
+                PieceDictionary(item) = CType(index, PieceType)
             Next
         Next
 
         StepDictionary = New Dictionary(Of String, Integer)
         For index = 0 To StepDictionarySource.Length - 1
-            For Each str In StepDictionarySource(index)
-                StepDictionary(str) = index + 1
+            For Each item In StepDictionarySource(index)
+                StepDictionary(item) = index + 1
             Next
         Next
     End Sub
@@ -113,6 +113,7 @@ Public Class MoveParser
         Dim letter4 = content(3)
         Dim pieceType As PieceType
         Dim startLocation As Vector2
+        Dim possibleStartLocations As New List(Of Vector2)
         Dim endLocation As Vector2
 
         Dim verticalCount As Integer
@@ -138,7 +139,7 @@ Public Class MoveParser
                     verticalOrder = verticalCount - 1 - verticalOrder
                 End If
 
-                startLocation = pieces(verticalOrder).Location
+                possibleStartLocations.Add(pieces(verticalOrder).Location)
             End If
         Else
             pieceType = PieceDictionary(letter1)
@@ -151,8 +152,10 @@ Public Class MoveParser
             For Each piece In board.PieceMap
                 If piece IsNot Nothing Then
                     If piece.Camp = board.Camp AndAlso piece.PieceType = pieceType AndAlso piece.Location.X = hIndex Then
-                        startLocation = piece.Location
-                        Exit For
+                        possibleStartLocations.Add(piece.Location)
+                        If letter3 = "平" Then
+                            Exit For
+                        End If
                     End If
                 End If
             Next
@@ -170,12 +173,20 @@ Public Class MoveParser
             Else
                 x = StepDictionary(letter4) - 1
             End If
+
+            startLocation = possibleStartLocations.FirstOrDefault()
             endLocation = New Vector2(x, startLocation.Y)
         Else
             If letter3 = "进" Then
                 invert = -invert
             ElseIf letter3 = "退" Then
                 invert = invert
+            End If
+
+            If invert = 1 Then
+                startLocation = possibleStartLocations.FirstOrDefault()
+            Else
+                startLocation = possibleStartLocations.LastOrDefault()
             End If
 
             If pieceType = PieceType.Adviser Then
