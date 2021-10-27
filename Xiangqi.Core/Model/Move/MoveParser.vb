@@ -122,14 +122,58 @@ Public Class MoveParser
         If OrderPositionString.Contains(letter1) Then
             pieceType = PieceDictionary(letter2)
             If pieceType = PieceType.Pawn Then
+                Dim pieces = From piece As Piece In board.PieceMap Where piece?.Camp = board.Camp AndAlso piece?.PieceType = pieceType
+                Dim groupGreaterThanOne = pieces.GroupBy(Of Single)(Function(piece As Piece)
+                                                                        Return piece.Location.X
+                                                                    End Function).Where(Function(group)
+                                                                                            Return group.Count > 1
+                                                                                        End Function)
+                Dim sorted = groupGreaterThanOne.ToList()
+                sorted.Sort(Function(a, b)
+                                If board.Camp = Camp.Red Then
+                                    Return Math.Sign(b.Key - a.Key)
+                                Else
+                                    Return Math.Sign(a.Key - b.Key)
+                                End If
+                            End Function)
+
+                Dim combined As New List(Of List(Of Piece))
+                For Each group In sorted
+                    Dim sortedGroup = group.ToList()
+                    sortedGroup.Sort(Function(a, b)
+                                         If board.Camp = Camp.Red Then
+                                             Return Math.Sign(a.Location.Y - b.Location.Y)
+                                         Else
+                                             Return Math.Sign(b.Location.Y - a.Location.Y)
+                                         End If
+                                     End Function)
+                    combined.Add(sortedGroup)
+                Next
+
+                pieces = combined.SelectMany(Of Piece)(Function(v)
+                                                           Return v
+                                                       End Function)
+
+                If letter1 = "前" Then
+                    verticalCount = combined.FirstOrDefault().Count
+                    verticalOrder = 0
+                ElseIf letter1 = "中" Then
+                    verticalCount = 3
+                    verticalOrder = 1
+                ElseIf letter1 = "后" Then
+                    verticalCount = combined.FirstOrDefault().Count
+                    verticalOrder = verticalCount - 1
+                Else
+                    verticalCount = pieces.Count
+                    verticalOrder = OrderPositionString.ToList.IndexOf(letter1)
+                End If
+
+                possibleStartLocations.Add(pieces(verticalOrder).Location)
             Else
                 Dim pieces = From piece As Piece In board.PieceMap Where piece?.Camp = board.Camp AndAlso piece?.PieceType = pieceType
                 If letter1 = "前" Then
                     verticalCount = 2
                     verticalOrder = 0
-                ElseIf letter1 = "中" Then
-                    verticalCount = 3
-                    verticalOrder = 1
                 ElseIf letter1 = "后" Then
                     verticalCount = 2
                     verticalOrder = 1
