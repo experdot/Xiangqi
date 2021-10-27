@@ -160,6 +160,9 @@ Public Class MoveParser
                 ElseIf letter1 = "中" Then
                     verticalCount = 3
                     verticalOrder = 1
+                    pieces = combined.FirstOrDefault(Function(list)
+                                                         Return list.Count = 3
+                                                     End Function).ToList()
                 ElseIf letter1 = "后" Then
                     verticalCount = combined.FirstOrDefault().Count
                     verticalOrder = verticalCount - 1
