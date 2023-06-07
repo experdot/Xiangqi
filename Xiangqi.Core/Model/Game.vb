@@ -81,7 +81,7 @@ Public Class XiangqiGame
                     RaiseEvent OnMoved(Me, New OnMovedEventArgs() With {
                         .OldLocation = oldLocation,
                         .NewLocation = newLocation,
-                        .Piece = Board.PieceMap(oldLocation.X, oldLocation.Y),
+                        .Piece = Board.PieceMap(newLocation.X, newLocation.Y),
                         .DestroyedPiece = destroyedPiece
                     })
 
