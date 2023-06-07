@@ -78,9 +78,6 @@ namespace Xiangqi.App.ViewModel
             y = (float)Math.Round((point.Y - border) / size);
 
             Game.Move(new System.Numerics.Vector2(x, y));
-
-            //PieceCanvas.Children.Clear();
-            //Render.RenderPiece(Game.Board, PieceCanvas);
         }
     }
 }

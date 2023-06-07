@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -102,7 +103,7 @@ namespace Xiangqi.App.Render
             var newPosition = newLocation * (float)Size + new Vector2(margin, margin);
 
             CubicEase cubicEase = new CubicEase() { EasingMode = EasingMode.EaseIn };
-            var duration = TimeSpan.FromMilliseconds(200);
+            var duration = TimeSpan.FromMilliseconds(800);
 
             DoubleAnimation animeX = new DoubleAnimation()
             {
@@ -120,16 +121,39 @@ namespace Xiangqi.App.Render
                 EasingFunction = cubicEase
             };
 
+            DoubleAnimation animeScale = new DoubleAnimation()
+            {
+                From = 1,
+                To = 1.24,
+                Duration = duration / 2,
+                EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut },
+                AutoReverse = true
+            };
+
+
             var grid = PieceGrid[oldLocation];
+            grid.SetValue(Canvas.ZIndexProperty, 1000);
+
             grid.BeginAnimation(Canvas.LeftProperty, animeX);
             grid.BeginAnimation(Canvas.TopProperty, animeY);
-            if (PieceGrid.ContainsKey(newLocation))
-            {
-                pieceCanvas.Children.Remove(PieceGrid[newLocation]);
-            }
 
-            PieceGrid[oldLocation] = null;
-            PieceGrid[newLocation] = grid;
+            grid.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, animeScale);
+            grid.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, animeScale);
+
+            pieceCanvas.Dispatcher.InvokeAsync(async () =>
+            {
+                await Task.Delay(duration.Milliseconds);
+
+                grid.SetValue(Canvas.ZIndexProperty, 0);
+
+                if (PieceGrid.ContainsKey(newLocation))
+                {
+                    pieceCanvas.Children.Remove(PieceGrid[newLocation]);
+                }
+
+                PieceGrid[oldLocation] = null;
+                PieceGrid[newLocation] = grid;
+            });
         }
 
         private Line DrawLine(Brush brush, double x1, double y1, double x2, double y2)
@@ -160,6 +184,10 @@ namespace Xiangqi.App.Render
             line.StrokeThickness = 3;
             line.Effect = new DropShadowEffect() { BlurRadius = 8 };
             grid.Children.Add(line);
+
+            grid.RenderTransform = new ScaleTransform();
+            grid.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+
             return grid;
         }
 
