@@ -172,7 +172,8 @@ Public Class AdviserRule
     Implements IRule
     Public Function GetMoveable(map As Piece(,), oldLocation As Vector2, newLocation As Vector2) As Boolean Implements IRule.GetMoveable
         Dim old_X = oldLocation.X, old_Y = oldLocation.Y, new_X = newLocation.X, new_Y = newLocation.Y
-        If Math.Abs((new_X - old_X) * (new_Y - old_Y)) = 1 And new_X >= 3 And new_X <= 5 Then
+        Dim camp = 1 - 2 * map(old_X, old_Y).Camp
+        If Math.Abs((new_X - old_X) * (new_Y - old_Y)) = 1 And new_X >= 3 And new_X <= 5 And -camp * new_Y <= -camp * (4.5 + camp * 2.5) Then
             Return 1
         End If
         Return False
