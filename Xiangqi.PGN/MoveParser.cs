@@ -7,37 +7,37 @@ namespace Xiangqi.PGN
 	public class MoveParser
 	{
 		/** 最大的列数 */
-		private static int MAX_FILE = 9;
+		private static readonly int MAX_FILE = 9;
 		/** 最大的行数 */
-		private static int MAX_RANK = 10;
+		private static readonly int MAX_RANK = 10;
 		/** 8个位置分别是"abcde+.-"，当"+.-"由方向转换为位置时，要加上该值 */
-		private static int DIRECT_TO_POS = 5;
+		private static readonly int DIRECT_TO_POS = 5;
 
 		/** 棋子代号"KABNRCP"分别表示"帅(将)仕(士)相(象)马车炮兵(卒)" */
-		private static String PIECE_TO_CHAR = "KABNRCP";
+		private static readonly string PIECE_TO_CHAR = "KABNRCP";
 
 	/** 可识别的数字有：中文数字、全角阿拉伯数字，以及它们的BIG5编码，还有半角阿拉伯数字 */
-	private static String[] DIGIT_TO_WORD = {
+	private static readonly string[] DIGIT_TO_WORD = {
 		"123456789", "一二三四五六七八九", "１２３４５６７８９", "�暎湦H�eきせ�槪牐�", "�k⒈⒉⒊⒋⒌⒍⒎⒏"
 	};
 
 	/** 可识别的棋子有：红方的"帅仕相马车炮兵"、黑方的"将士象马车炮卒"，以及它们的BIG5编码 */
-	private static String[] PIECE_TO_WORD = {
+	private static readonly string[] PIECE_TO_WORD = {
 		"帅仕相马车炮兵", "将士象马车炮卒", "�婴牞郯è��鼎�", @"盢�\禜皑ó�定�"
 	};
 
 	/** 可识别的方向有"进平退"以及它们的BIG5编码 */
-	private static String[] DIRECT_TO_WORD = {
+	private static readonly string[] DIRECT_TO_WORD = {
 		"进平退", "秈キ癶"
 	};
 
 	/** 可识别的位置有"一二三四五前中后"以及它们的BIG5编码 */
-	private static String[] POS_TO_WORD = {
+	private static readonly string[] POS_TO_WORD = {
 		"一二三四五前中后", "�k⒈⒉⒊⒋玡い��"
 	};
 
 	/** 确定的纵线表示一共有仕(士)的8种、相(象)的16种和仕(士)相(象)升变成兵(卒)的4种 */
-	private static String[] FIX_FILE = {
+	private static readonly string[] FIX_FILE = {
 		"A4-5", "A4+5", "A5-4", "A5+4", "A5-6", "A5+6", "A6-5", "A6+5",
 		"B1-3", "B1+3", "B3-1", "B3+1", "B3-5", "B3+5", "B5-3", "B5+3",
 		"B5-7", "B5+7", "B7-5", "B7+5", "B7-9", "B7+9", "B9-7", "B9+7",
@@ -45,7 +45,7 @@ namespace Xiangqi.PGN
 	};
 
 	/** 确定的纵线表示，对应红方走法的起点和终点坐标，黑方需要对这些坐标作翻转 */
-	private static short[,] FIX_MOVE = {
+	private static readonly short[,] FIX_MOVE = {
 		{0xa8, 0xb7}, {0xc8, 0xb7}, {0xb7, 0xc8}, {0xb7, 0xa8},
 		{0xb7, 0xc6}, {0xb7, 0xa6}, {0xa6, 0xb7}, {0xc6, 0xb7},
 		{0xab, 0xc9}, {0xab, 0x89}, {0x89, 0xab}, {0xc9, 0xab},
@@ -56,7 +56,7 @@ namespace Xiangqi.PGN
 	};
 
 		/** 按位置(前中后)来查找棋子，对应的坐标 */
-		private static short[] XY_TO_SQ = {
+		private static readonly short[] XY_TO_SQ = {
 		0x3b, 0x4b, 0x5b, 0x6b, 0x7b, 0x8b, 0x9b, 0xab, 0xbb, 0xcb,
 		0x3a, 0x4a, 0x5a, 0x6a, 0x7a, 0x8a, 0x9a, 0xaa, 0xba, 0xca,
 		0x39, 0x49, 0x59, 0x69, 0x79, 0x89, 0x99, 0xa9, 0xb9, 0xc9,
@@ -68,32 +68,32 @@ namespace Xiangqi.PGN
 		0x33, 0x43, 0x53, 0x63, 0x73, 0x83, 0x93, 0xa3, 0xb3, 0xc3
 	};
 
-		private static int digit2Char(int n)
+		private static int Digit2Char(int n)
 		{
 			return n < 0 || n > 9 ? ' ' : '1' + n;
 		}
 
-		private static int piece2Char(int n)
+		private static int Piece2Char(int n)
 		{
 			return n < 0 || n >= 7 ? ' ' : PIECE_TO_CHAR[n];
 		}
 
-		private static int direct2Char(int n)
+		private static int Direct2Char(int n)
 		{
 			return n < 0 || n >= 3 ? ' ' : "+.-"[n];
 		}
 
-		private static int pos2Char(int n)
+		private static int Pos2Char(int n)
 		{
 			return n < 0 || n >= 8 ? ' ' : "abcde+.-"[n];
 		}
 
-		private static int char2Digit(int c)
+		private static int Char2Digit(int c)
 		{
 			return c >= '1' && c <= '9' ? c - '1' : -1;
 		}
 
-		private static int char2Piece(int c)
+		private static int Char2Piece(int c)
 		{
 			if (c >= 'a' && c <= 'z')
 			{
@@ -102,22 +102,22 @@ namespace Xiangqi.PGN
 			return c == 'E' ? 2 : c == 'H' ? 3 : PIECE_TO_CHAR.IndexOf((char)c);
 		}
 
-		private static int char2Direct(int c)
+		private static int Char2Direct(int c)
 		{
 			return c == '+' ? 0 : c == '.' || c == '=' ? 1 : c == '-' ? 2 : -1;
 		}
 
-		private static int char2Pos(int c)
+		private static int Char2Pos(int c)
 		{
 			if (c >= 'a' && c <= 'e')
 			{
 				return c - 'a';
 			}
-			int dir = char2Direct(c);
+			int dir = Char2Direct(c);
 			return dir < 0 ? -1 : dir + DIRECT_TO_POS;
 		}
 
-		private static int word2Digit(int w)
+		private static int Word2Digit(int w)
 		{
 			for (int i = 0; i < DIGIT_TO_WORD.Length; i++)
 			{
@@ -130,7 +130,7 @@ namespace Xiangqi.PGN
 			return -1;
 		}
 
-		private static int word2Piece(int w)
+		private static int Word2Piece(int w)
 		{
 			if (w == '帥' || w == '將')
 			{
@@ -159,7 +159,7 @@ namespace Xiangqi.PGN
 			return -1;
 		}
 
-		private static int word2Direct(int w)
+		private static int Word2Direct(int w)
 		{
 			if (w == '進')
 			{
@@ -176,7 +176,7 @@ namespace Xiangqi.PGN
 			return -1;
 		}
 
-		private static int word2Pos(int w)
+		private static int Word2Pos(int w)
 		{
 			if (w == '後')
 			{
@@ -193,19 +193,19 @@ namespace Xiangqi.PGN
 			return -1;
 		}
 
-		private static int xy2Sq(int x, int y, int sd)
+		private static int Xy2Sq(int x, int y, int sd)
 		{
 			int sq = XY_TO_SQ[x * 10 + y];
 			return sd == 0 ? sq : SimplePos.SQUARE_FLIP(sq);
 		}
 
-		private static bool findPiece(int pt, int x, int y, SimplePos p)
+		private static bool FindPiece(int pt, int x, int y, SimplePos p)
 		{
-			return p.squares[xy2Sq(x, y, p.sdPlayer)] == SimplePos.SIDE_TAG(p.sdPlayer) + pt;
+			return p.squares[Xy2Sq(x, y, p.sdPlayer)] == SimplePos.SIDE_TAG(p.sdPlayer) + pt;
 		}
 
 		/** WXF表示转换为内部着法表示 */
-		public static int file2Move(String strFile, SimplePos p)
+		public static int File2Move(String strFile, SimplePos p)
 		{
 			// 纵线符号表示转换为内部着法表示，通常分为以下几个步骤：
 
@@ -243,15 +243,15 @@ namespace Xiangqi.PGN
 
 			// 2. 如果不是这28种固定纵线表示，那么把棋子、位置和纵线序号(列号)解析出来
 			int pt;
-			int pos = char2Direct(cFile[0]);
+			int pos = Char2Direct(cFile[0]);
 			if (pos < 0)
 			{
-				pt = char2Piece(cFile[0]);
-				pos = char2Pos(cFile[1]);
+				pt = Char2Piece(cFile[0]);
+				pos = Char2Pos(cFile[1]);
 			}
 			else
 			{
-				pt = char2Piece(cFile[1]);
+				pt = Char2Piece(cFile[1]);
 				pos += DIRECT_TO_POS;
 			}
 			if (pt < 0)
@@ -263,14 +263,14 @@ namespace Xiangqi.PGN
 			{
 
 				// 3. 如果棋子是用列号表示的，那么可以直接根据纵线来找到棋子序号；
-				xSrc = char2Digit(cFile[1]);
+				xSrc = Char2Digit(cFile[1]);
 				if (xSrc < 0)
 				{
 					return 0;
 				}
 				for (ySrc = 0; ySrc < MAX_RANK; ySrc++)
 				{
-					if (findPiece(pt, xSrc, ySrc, p))
+					if (FindPiece(pt, xSrc, ySrc, p))
 					{
 						break;
 					}
@@ -292,13 +292,13 @@ namespace Xiangqi.PGN
 				{
 					for (int y = 0; y < MAX_RANK; y++)
 					{
-						if (findPiece(pt, x, y, p))
+						if (FindPiece(pt, x, y, p))
 						{
 							// 注意：排除一列上只有一枚棋子的情况
 							int nc = 0;
 							for (int yy = 0; yy < MAX_RANK && nc <= 1; yy++)
 							{
-								if (findPiece(pt, x, yy, p))
+								if (FindPiece(pt, x, yy, p))
 								{
 									nc++;
 								}
@@ -327,7 +327,7 @@ namespace Xiangqi.PGN
 
 			// 6. 现在已知了着法的起点，就可以根据纵线表示的后两个符号来确定着法的终点；
 			int xDst, yDst;
-			int n = char2Digit(cFile[3]);
+			int n = Char2Digit(cFile[3]);
 			if (n < 0)
 			{
 				return 0;
@@ -366,11 +366,11 @@ namespace Xiangqi.PGN
 			{
 				return 0;
 			}
-			return SimplePos.MOVE(xy2Sq(xSrc, ySrc, p.sdPlayer), xy2Sq(xDst, yDst, p.sdPlayer));
+			return SimplePos.MOVE(Xy2Sq(xSrc, ySrc, p.sdPlayer), Xy2Sq(xDst, yDst, p.sdPlayer));
 		}
 
 		/** ICCS表示转换为内部着法表示 */
-		public static int iccs2Move(String strIccs)
+		public static int Iccs2Move(String strIccs)
 		{
 			char[] cIccs = strIccs.ToCharArray();
 			if (cIccs[0] < 'A' || cIccs[0] > 'I' || cIccs[1] < '0' || cIccs[1] > '9' ||
@@ -386,25 +386,25 @@ namespace Xiangqi.PGN
 		}
 
 		/** 中文表示转换为WXF表示 */
-		public static String chin2File(String strChin)
+		public static string Chin2File(string strChin)
 		{
 			char[] cChin = strChin.ToCharArray();
 			char[] cFile = new char[4];
-			int pos = word2Pos(cChin[0]);
-			cFile[0] = (char)piece2Char(word2Piece(pos < 0 ? cChin[0] : cChin[1]));
-			cFile[1] = (char)(pos < 0 ? digit2Char(word2Digit(cChin[1])) : pos2Char(pos));
+			int pos = Word2Pos(cChin[0]);
+			cFile[0] = (char)Piece2Char(Word2Piece(pos < 0 ? cChin[0] : cChin[1]));
+			cFile[1] = (char)(pos < 0 ? Digit2Char(Word2Digit(cChin[1])) : Pos2Char(pos));
 			if ((cChin[2] == '变' || cChin[2] == '跑' || cChin[2] == '變') &&
-					word2Piece(cChin[3]) == 6)
+					Word2Piece(cChin[3]) == 6)
 			{ // 跑[變]
 				cFile[2] = '=';
 				cFile[3] = 'P';
 			}
 			else
 			{
-				cFile[2] = (char)direct2Char(word2Direct(cChin[2]));
-				cFile[3] = (char)digit2Char(word2Digit(cChin[3]));
+				cFile[2] = (char)Direct2Char(Word2Direct(cChin[2]));
+				cFile[3] = (char)Digit2Char(Word2Digit(cChin[3]));
 			}
-			return new String(cFile);
+			return new string(cFile);
 		}
 	}
 }
